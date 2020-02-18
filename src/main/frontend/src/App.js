@@ -28,6 +28,7 @@ function App(props) {
     try {
       let resp = await fetch('/v1/auth');
 
+      console.log(resp.status === 200);
       if (resp.status === 200) {
         userHasAuthenticated(true);
 

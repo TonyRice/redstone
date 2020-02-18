@@ -3,17 +3,20 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
 
+import AppliedRoute from "./routers/AppliedRoute";
 import AuthenticatedRoute from "./routers/AuthenticatedRoute";
 import UnauthenticatedRoute from "./routers/UnauthenticatedRoute";
 
 
 export default function Routes({ appProps }) {
+
+  console.log(appProps);
   return (
     <Switch>
-      <Route path="/" exact component={Home} appProps={appProps} />
+      <AppliedRoute path="/" exact component={Home} appProps={appProps} />
       <UnauthenticatedRoute path="/login" exact component={Login} appProps={appProps} />
-      <Route exact path="*" render={() => (
-        <Redirect to="/" />
+      <Route exact path="*"  appProps={appProps} render={() => (
+        <Redirect appProps={appProps} to="/" />
       )} />
     </Switch>
   );

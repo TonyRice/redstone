@@ -9,7 +9,10 @@ export default function Home(props) {
 
   useEffect(() => {
     async function onLoad() {
+
+      console.log(props);
       if (!props.isAuthenticated) {
+        console.log("Not authenticated")
         return;
       }
 
@@ -43,6 +46,7 @@ export default function Home(props) {
   }
 
   function renderLander() {
+    console.log(props);
     return (
       <div className="lander">
         <h1>Redstone</h1>
@@ -69,10 +73,11 @@ export default function Home(props) {
       </div>
     );
   }
+  console.log(props.isAuthenticated);
 
   return (
     <div className="Home">
-      {props.isAuthenticated ? renderWires() : renderLander()}
+      {props.isAuthenticated  ? renderWires() : renderLander()}
     </div>
   );
 }

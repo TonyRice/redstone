@@ -1,0 +1,50 @@
+{
+    "armed": {
+        "title": "Arm System (Stay)",
+        "opened": "siren_on",
+        "disable": "siren_off"
+    },
+    "away_armed": {
+        "title": "Arm System (Away)",
+        "activate": {
+            "delay" : 30000,
+            "ifttt": "alarm_siren_off"
+        },
+        "disable": "siren_off",
+        "opened": {
+            "timer": {
+                "delay": 30000,
+                "ifttt": "alarm_siren_on"
+            }
+        },
+        "closed": {
+            "kill_timers": [
+                "opened"
+            ]
+        },
+        "motion": {
+            "timer": {
+                "delay": 60000,
+                "ifttt": "alarm_siren_on"
+            }
+        },
+        "motion_cleared": {}
+    },
+    "disarmed": {
+        "title": "Disarm System",
+        "description": "The system is disarmed, and all events are ignored.",
+        "activate": "siren_off"
+    },
+    "_alias_siren_on": {
+        "ifttt": "alarm_siren_on"
+    },
+    "_alias_siren_off": {
+        "ifttt": "alarm_siren_off"
+    },
+    "_config_ifttt_key": "disarmed",
+    "_config_default_wire": "armed",
+    "_config_http_port" : 9999,
+    "_config_http_host" : "127.0.0.1",
+    "_config_http_auth" : "httpauth",
+    "_config_trip_key": "ChangeThisToSomethingRandom"
+}

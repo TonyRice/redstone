@@ -14,7 +14,7 @@ import io.vertx.ext.web.handler.impl.HttpStatusException;
 public class ReactHtdigestAuthHandler extends DigestAuthHandlerImpl {
 
     public static AuthHandler create(Vertx vertx, String filename) {
-        AuthHandler authHandler = new ReactHtdigestAuthHandler(new ReactHtdigestAuth(vertx, ".htdigest"), 3600000);
+        AuthHandler authHandler = new ReactHtdigestAuthHandler(new ReactHtdigestAuth(vertx, filename), 3600000);
         return authHandler;
     }
 

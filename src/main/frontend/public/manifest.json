@@ -1,6 +1,6 @@
 {
   "short_name": "Redstone",
-  "name": "Simple automated workflows powered by JSON, and HTTP.",
+  "name": "Simple automated workflow curation using JSON and HTTP.",
   "icons": [
     {
       "src": "favicon.ico",

@@ -46,7 +46,7 @@ export default function Home(props) {
     return (
       <div className="lander">
         <h1>Redstone</h1>
-        <p>Simple automated workflows powered by JSON, and HTTP.</p>
+        <p>Simple automated workflow curation using JSON and HTTP.</p>
       </div>
     );
   }
@@ -58,7 +58,8 @@ export default function Home(props) {
           {!isLoading && wires.map((wire) => {
             if (wire.active == true) {
               return (
-                <ListGroup.Item key={wire.id} onClick={() => activateWire(wire.id)} active action>{wire.title}</ListGroup.Item>)
+                <ListGroup.Item key={wire.id} onClick={() => activateWire(wire.id)} active action>{wire.title}</ListGroup.Item>
+              );
             }
             return (
               <ListGroup.Item key={wire.id} onClick={() => activateWire(wire.id)} action>{wire.title}</ListGroup.Item>

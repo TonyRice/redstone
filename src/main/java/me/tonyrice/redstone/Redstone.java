@@ -24,7 +24,7 @@ import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.client.WebClient;
 
 /**
- * Redstone is a simple interface for creating automated workflows with JSON.
+ * Redstone is a simple interface for curating automated workflows with JSON.
  */
 public class Redstone {
     final private Logger logger = LoggerFactory.getLogger(Redstone.class);

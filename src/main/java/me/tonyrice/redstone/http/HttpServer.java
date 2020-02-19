@@ -1,7 +1,10 @@
 package me.tonyrice.redstone.http;
 
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.AsyncResult;
+import io.vertx.core.Handler;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpServer;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.logging.Logger;
@@ -188,9 +191,14 @@ public class HttpServer extends AbstractVerticle {
 
       int http_port = redstone.config().getInteger("http_port", 8888);
 
-      vertx.createHttpServer().requestHandler(router).listen(http_port);
-
-      logger.info("Redstone HTTP Server listening on port " + http_port + ".");
+      vertx.createHttpServer().requestHandler(router).listen(http_port, res -> {
+        if(res.failed()){
+          logger.fatal("Failed to start Redstone HTTP Server!", res.cause());
+          System.exit(0);
+          return;
+        }
+        logger.info("Redstone HTTP Server listening on port " + http_port + ".");
+      });
     });
   }
 }

@@ -176,6 +176,10 @@ public class Redstone {
         }
 
         public Wire disable() {
+            if (!activated){
+                return this;
+            }
+            
             logger.info("Disabling wire \"" + wireId + "\".");
 
             for (Hook hook : hooks.values()) {

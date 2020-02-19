@@ -1,5 +1,6 @@
 package me.tonyrice.redstone;
 
+import java.time.LocalTime;
 import java.util.AbstractMap;
 import java.util.Calendar;
 import java.util.Date;
@@ -162,7 +163,7 @@ public class Redstone {
                 }
                 liveWire.disable();
             }
-            
+
             // Set the active wire to this wire
             activeWire = this;
 
@@ -275,6 +276,16 @@ public class Redstone {
                     triggerTimers();
                     triggerOutbound();
 
+                    if(config.containsKey("wire")) {
+                        String wireId = config.getString("wire");
+
+                        Wire wire = wire(wireId);
+
+                        if (wire != null) {
+                            wire.activate();
+                        }
+                    }
+
                     completeHandler.handle(Future.succeededFuture());
                 });
 
@@ -316,11 +327,9 @@ public class Redstone {
                 }
 
                 if (config.containsKey("schedule")) {
-
                     JsonObject schedHook = config.getJsonObject("schedule", new JsonObject());
-
+                    
                     String when = schedHook.getString("when");
-
                     boolean repeat = schedHook.getBoolean("repeat", false);
 
                     schedHook.remove("when");
@@ -360,13 +369,11 @@ public class Redstone {
             }
 
             private void triggerOutbound() {
-
                 if (config.containsKey("http_get")){
 
                     Object value = config.getValue("http_get", "https://www.google.com");
 
                     List<String> urls = new LinkedList<>();
-
                     if (value instanceof JsonArray) {
                         for (Object obj : ((JsonArray) value).getList()) {
                             urls.add(obj.toString());
@@ -376,21 +383,21 @@ public class Redstone {
                     }
 
                     urls.forEach(url -> {
-                        webClient.getAbs(url).ssl(true).send(rs -> {
-                            if (rs.succeeded()) {
+                        logger.info("Triggering HTTP request on \"" + url + "\" on wire \"" + wireId + "\" triggered by \"" + hookId + "\".");
+                        webClient.getAbs(url).send(rs -> {
+                            if (rs.failed()) {
+                                logger.error("Failed to send request on wire \"" + wireId + "\" triggered by \"" + hookId + "\".");
                             }
                         });
                     });
                 }
 
                 if (config.containsKey("ifttt")) {
-
-                    Object value = config.getValue("ifttt", "Redstone_event");
+                    Object value = config.getValue("ifttt", "redstone_event");
 
                     List<String> events = new LinkedList<>();
 
                     if (value instanceof JsonArray) {
-                        // Multiple events
                         for (Object obj : ((JsonArray) value).getList()) {
                             events.add(obj.toString());
                         }
@@ -399,13 +406,15 @@ public class Redstone {
                     }
 
                     events.forEach(event -> {
+                        logger.info("Triggering IFTTT event \"" + event + "\" on wire \"" + wireId + "\" triggered by \"" + hookId + "\".");
+
                         String apiKey = config().getString("ifttt_key", "invalid");
                         String iftttUrl = "https://maker.ifttt.com/trigger/" + event
                                 + "/with/key/" + apiKey;
 
                         webClient.getAbs(iftttUrl).ssl(true).send(rs -> {
-                            if (rs.succeeded()) {
-                                logger.info("Triggered IFTTT event " + event + ".");
+                            if (rs.failed()) {
+                                logger.error("Failed to send request on wire \"" + wireId + "\" triggered by \"" + hookId + "\".");
                             }
                         });
                     });
@@ -419,25 +428,13 @@ public class Redstone {
             }
 
             private long getScheduledTimeout(String when) {
+                LocalTime time = LocalTime.parse(when);
 
                 Calendar now = Calendar.getInstance();
                 Calendar sched = Calendar.getInstance();
-                if (when.endsWith("AM")) {
-                    sched.set(Calendar.AM_PM, Calendar.AM);
-                } else if (when.endsWith("PM")) {
-                    sched.set(Calendar.AM_PM, Calendar.PM);
-                }
 
-                String time = when.replace("AM", "").replace("PM", "");
-                String hour = time.split(":")[0];
-                String minute = "0";
-
-                if (time.contains(":")) {
-                    minute = time.split(":")[1];
-                }
-
-                sched.set(Calendar.HOUR, Integer.parseInt(hour));
-                sched.set(Calendar.MINUTE, Integer.parseInt(minute));
+                sched.set(Calendar.HOUR, time.getHour());
+                sched.set(Calendar.MINUTE, time.getMinute());
 
                 if (sched.before(now)) {
                     sched.add(Calendar.DAY_OF_MONTH, 1);
@@ -445,9 +442,7 @@ public class Redstone {
 
                 return sched.getTime().getTime() - (new Date()).getTime();
             }
-
         }
-
     }
 
     public static void load(Vertx vertx, String loadedWires, Handler<AsyncResult<Redstone>> handler) {

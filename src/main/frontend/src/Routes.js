@@ -13,8 +13,8 @@ export default function Routes({ appProps }) {
     <Switch>
       <AppliedRoute path="/" exact component={Home} appProps={appProps} />
       <UnauthenticatedRoute path="/login" exact component={Login} appProps={appProps} />
-      <Route exact path="*"  appProps={appProps} render={() => (
-        <Redirect appProps={appProps} to="/" />
+      <Route exact path="*" render={() => (
+        <Redirect to="/" />
       )} />
     </Switch>
   );

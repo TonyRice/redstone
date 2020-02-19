@@ -66,7 +66,6 @@ function App(props) {
               : <>
                 <Nav.Item>
                   <LinkContainer to="/login">
-
                     <Nav.Link>Login</Nav.Link>
                   </LinkContainer>
                 </Nav.Item>

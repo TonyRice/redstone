@@ -283,6 +283,21 @@ public class Redstone {
                     triggerTimers();
                     triggerOutbound();
 
+                    if(config.containsKey("hook")) {
+                        Object hookVal = config.getValue("hook");
+
+                        if (hookVal instanceof JsonObject) {
+                            Hook thook = new Hook(wire, hookId + "_inline", (JsonObject) hookVal);
+                            thook.trigger();
+                        } else {
+                            Hook hook = hook(hookVal.toString());
+                            if (hook != this) {
+                                hook.trigger();
+                            }
+                        }
+                        
+                    }
+
                     if(config.containsKey("wire")) {
                         String wireId = config.getString("wire");
 

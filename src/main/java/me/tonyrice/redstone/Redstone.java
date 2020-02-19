@@ -295,7 +295,6 @@ public class Redstone {
                                 hook.trigger();
                             }
                         }
-                        
                     }
 
                     if(config.containsKey("wire")) {

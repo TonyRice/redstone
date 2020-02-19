@@ -154,6 +154,9 @@ public class Redstone {
             logger.info("Activating wire \"" + wireId + "\".");
 
             for (Wire wire : loadedWires) {
+                if (wire == this){
+                    continue;
+                }
                 wire.disable();
             }
 
@@ -176,14 +179,14 @@ public class Redstone {
         }
 
         public Wire disable() {
-            if (!activated){
-                return this;
-            }
-            
             logger.info("Disabling wire \"" + wireId + "\".");
 
             for (Hook hook : hooks.values()) {
                 hook.killTimers();
+            }
+
+            if (!activated){
+                return this;
             }
 
             activeWire = null;

@@ -168,7 +168,7 @@ public class Redstone {
                 if (liveWire == this) {
                     return this;
                 }
-                liveWire.disable();
+                liveWire.deactivate();
             }
 
             // Set the active wire to this wire
@@ -189,8 +189,8 @@ public class Redstone {
             });
         }
 
-        public Wire disable() {
-            logger.info("Disabling wire \"" + wireId + "\".");
+        public Wire deactivate() {
+            logger.info("Deactivating wire \"" + wireId + "\".");
 
             for (Hook hook : hooks.values()) {
                 hook.killTimers();
@@ -203,7 +203,7 @@ public class Redstone {
             activeWire = null;
             activated = false;
 
-            return this.trip("disable");
+            return this.trip("deactivate");
         }
 
         public Wire trip(String hookId) {

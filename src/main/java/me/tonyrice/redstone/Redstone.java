@@ -153,13 +153,16 @@ public class Redstone {
         public Wire activate() {
             logger.info("Activating wire \"" + wireId + "\".");
 
-            for (Wire wire : loadedWires) {
-                if (wire == this){
-                    continue;
-                }
-                wire.disable();
-            }
 
+            Wire liveWire = live();
+
+            if (liveWire != null) {
+                if (liveWire == this) {
+                    return this;
+                }
+                liveWire.disable();
+            }
+            
             // Set the active wire to this wire
             activeWire = this;
 

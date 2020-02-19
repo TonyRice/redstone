@@ -87,6 +87,13 @@ public class Redstone {
         return configJson;
     }
 
+    public Redstone trip(String hookId) {
+        if (activeWire != null){
+            activeWire.trip(hookId);
+        }
+        return this;
+    }
+
     public Wire live() {
         return this.activeWire;
     }
@@ -328,7 +335,7 @@ public class Redstone {
 
                 if (config.containsKey("schedule")) {
                     JsonObject schedHook = config.getJsonObject("schedule", new JsonObject());
-                    
+
                     String when = schedHook.getString("when");
                     boolean repeat = schedHook.getBoolean("repeat", false);
 

@@ -173,7 +173,7 @@ public class HttpServer extends AbstractVerticle {
         String reqTripKey = body.getString("key", "error");
 
         if (reqTripKey.equals(tripKey)) {
-          redstone.live().trip(tripHook);
+          redstone.trip(tripHook);
         }
 
         rc.response().end("OK");

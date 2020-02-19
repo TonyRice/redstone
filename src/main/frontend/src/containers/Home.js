@@ -70,7 +70,6 @@ export default function Home(props) {
       </div>
     );
   }
-  console.log(props.isAuthenticated);
 
   return (
     <div className="Home">

@@ -2,7 +2,7 @@
     "armed": {
         "title": "Arm System (Stay)",
         "opened": "siren_on",
-        "disable": "siren_off"
+        "deactivate": "siren_off"
     },
     "away_armed": {
         "title": "Arm System (Away)",
@@ -10,7 +10,7 @@
             "delay" : 30000,
             "ifttt": "alarm_siren_off"
         },
-        "disable": "siren_off",
+        "deactivate": "siren_off",
         "opened": {
             "timer": {
                 "delay": 30000,
@@ -45,5 +45,5 @@
     "_config_http_port" : 9999,
     "_config_http_host" : "127.0.0.1",
     "_config_http_auth" : "httpauth",
-    "_config_trip_key": "ChangeThisToSomethingRandom"
+    "_config_trip_key": "NOTSECURE"
 }

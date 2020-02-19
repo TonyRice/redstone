@@ -41,8 +41,7 @@
     "_alias_siren_off": {
         "ifttt": "alarm_siren_off"
     },
-    "_config_ifttt_key": "disarmed",
-    "_config_default_wire": "armed",
+    "_config_default_wire": "disarmed",
     "_config_http_port" : 9999,
     "_config_http_host" : "127.0.0.1",
     "_config_http_auth" : "httpauth",

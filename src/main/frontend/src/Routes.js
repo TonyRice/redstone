@@ -9,8 +9,6 @@ import UnauthenticatedRoute from "./routers/UnauthenticatedRoute";
 
 
 export default function Routes({ appProps }) {
-
-  console.log(appProps);
   return (
     <Switch>
       <AppliedRoute path="/" exact component={Home} appProps={appProps} />

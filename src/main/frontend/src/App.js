@@ -11,12 +11,10 @@ function App(props) {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   async function handleLogout() {
-
     let resp = await fetch('/v1/logout');
 
     if (resp.status === 200) {
       userHasAuthenticated(false);
-
     }
   }
 

@@ -9,8 +9,6 @@ export default function Home(props) {
 
   useEffect(() => {
     async function onLoad() {
-
-      console.log(props);
       if (!props.isAuthenticated) {
         console.log("Not authenticated")
         return;
@@ -46,7 +44,6 @@ export default function Home(props) {
   }
 
   function renderLander() {
-    console.log(props);
     return (
       <div className="lander">
         <h1>Redstone</h1>

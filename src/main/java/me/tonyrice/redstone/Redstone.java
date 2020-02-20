@@ -176,7 +176,7 @@ public class Redstone {
 
             return this.trip("activate", rs -> {
                 activated = true;
-
+                
                 Iterator i = tripCache.iterator();
                 while (i.hasNext()) {
                     Map.Entry<String, Handler<AsyncResult<Void>>> entry = (Entry<String, Handler<AsyncResult<Void>>>) i
@@ -225,6 +225,10 @@ public class Redstone {
                 logger.info("Tripping hook \"" + hookId + "\" on wire \"" + wireId + "\".");
                 Hook hook = hooks.get(hookId);
                 hook.trigger(handler);
+            } else {
+                if (hookId == "activate" || hookId == "disable") {
+                    handler.handle(Future.succeededFuture());
+                }
             }
 
             return this;
